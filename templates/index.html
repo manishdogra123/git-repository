@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock title %}
+{% load cart_info %}
+{% block homeactive %}active{% endblock homeactive %}
+
+{% block body %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-2 my-4 mx-auto">
+      <div class="list-group">
+        <a href="/" class="list-group-item list-group-item-action">All Product</a>
+        {% comment %} filter {% endcomment %}
+        {% for categorydata in categories %}
+        <a href="/?category={{categorydata.id}}"
+          class="list-group-item list-group-item-action">{{categorydata.name}}</a>
+        {% endfor %}
+      </div>
+
+    </div>
+
+    {% comment %} all products {% endcomment %}
+    <div id="products" class="col-lg-10">
+      <div class="row mx-auto my-2">
+        {% for data in products %}
+        <div class="card mx-3 mb-2" id="{{data.id}}" style="width: 18rem;">
+          <img src="{{data.image.url}}" class="card-img-top" style="width: 265px; height: 315px;" alt="load">
+          <div class="card-body">
+            <h5 class="card-title">{{data.name}}</h5>
+            <p class="card-text">{{data.description|truncatechars:50}}</p>
+            <p class="card-text"><b>Rs.</b>{{data.price}}</p>
+            {% comment %} <a href="#" class="btn btn-primary btn-sm">Add To Cart</a> {% endcomment %}
+            {% comment %} {{data|in_cart:request.session.cart}} {% endcomment %}
+          </div>
+            {% if data|in_cart:request.session.cart %}
+          <div class="card-footer row">
+            <form action="#{{data.id}}" class="col-2" method="post">
+            {% csrf_token %}
+            <input type="text" name="product" value="{{data.id}}"hidden>
+            <input type="text" name="change" value="True" hidden>
+            <input type="submit" value="-" class="btn-block btn btn-primary">
+           </form>
+            <div class="text-center col">{{data|total_item_in_cart:request.session.cart}}<b> Cart</b></div>
+           
+           <form action="#{{data.id}}" class="col-2" method="post">
+            {% csrf_token %}
+            <input type="text" name="product" value="{{data.id}}" hidden>
+            <input type="submit" value="+" class="btn-block btn btn-primary">
+           </form>
+          </div>
+          {% else %} 
+          <form action="#{{data.id}}" method="post" class="btn btn-block">
+            {% csrf_token %}
+            <input type="text" name="product" value="{{data.id}}" hidden>
+            <input type="submit" class="btn btn-primary btn-sm" value="Add To Cart">
+          </form>
+          {% endif %}
+          {% comment %} <div class="row">
+            <input type="submit" value="-" class="col-2 btn-block btn btn-primary">
+            <div class="text-center col">To Cart</div>
+            <input type="submit" value="+" class="col-2 btn-block btn btn-primary">
+          </div> {% endcomment %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container" id="abc">
+<div class="jumbotron">
+  <h1 class="display-3">Jumbo heading</h1>
+  <p class="lead">Jumbo helper text</p>
+  <hr class="my-2">
+  <p>More info</p>
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="Jumbo action link" role="button">Jumbo action name</a>
+  </p>
+</div>
+</div>
+{% endblock body %}

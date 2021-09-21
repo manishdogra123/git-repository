@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block loginactive %}active{% endblock loginactive %}
+{% block body %}
+ <div class="container my-3">
+  <div class="col-lg-5 mx-auto">
+    <h3 class="alert alert-light border" style="text-align: center;background-color: aquamarine; ">Login An Account</h3>
+    <form action="/login" method="post">
+     {% csrf_token %}
+        <div class="mb-3 pt-4">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" class="form-control" id="user" value="" name="username" aria-describedby="emailHelp"
+            placeholder="Enter username">
+        </div>
+      <div class="mb-3">
+        <label for="pass1" class="form-label">Password</label>
+        <input type="password" class="form-control" id="pass1" name="password" placeholder="**********" >
+      </div>
+      <button type="submit" class="btn btn-primary btn btn-sm">Login</button>
+    </form>
+  </div>
+</div>
+{% endblock body %}

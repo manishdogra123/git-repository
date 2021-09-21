@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block signupactive %}active{% endblock signupactive %}
+{% block body %}
+ <div class="container my-3">
+  <div class="col-lg-5 mx-auto">
+    <h3 class="alert alert-light border" style="text-align: center;background-color: aquamarine; ">Create An Account</h3>
+    <form action="/signup" method="post">
+     {% csrf_token %}
+        <div class="mb-3 pt-4">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" class="form-control" id="username" value="{{values.username}}" name="username" aria-describedby="emailHelp"
+            placeholder=" Enter username (lower & alphanumeric)" Required>
+        </div>
+      <div class="mb-3">
+        <label for="fname" class="form-label">Enter FName</label>
+        <input type="text" class="form-control" id="fname" value="{{values.first_name}}" name="first_name" placeholder="Enter your first name"Required >
+      </div>
+      <div class="mb-3">
+        <label for="lname1" class="form-label">Last Name</label>
+        <input type="text" class="form-control" id="lname" value="{{values.last_name}}" name="last_name" placeholder="Enter your last name"Required >
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" value="{{values.email}}" name="email"
+          placeholder="Enter your email address" Required>
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+      </div>
+      <div class="mb-3">
+        <label for="pass1" class="form-label">Choose Password</label>
+        <input type="password" class="form-control" id="pass1" name="pass1" placeholder="**********" >
+      </div Required>
+         <div class="mb-3">
+        <label for="pass2" class="form-label">Confirm Password</label>
+        <input type="password" class="form-control" id="pass2" name="pass2" placeholder="**********" >
+      </div Required>
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+      </div>
+      <button type="submit" class="btn btn-primary btn btn-sm">Create An Account</button>
+    </form>
+  </div>
+</div>
+{% endblock body %}
